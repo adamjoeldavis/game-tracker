@@ -15,5 +15,14 @@
 	<description>Main entrypoint for the GameTracker application.</description>
 	
 	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>davis.gametracker</groupId>
+			<artifactId>controller</artifactId>
+		</dependency>
 	</dependencies>
 </project>

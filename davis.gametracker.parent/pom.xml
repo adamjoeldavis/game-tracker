@@ -7,12 +7,12 @@
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>1.3.5.RELEASE</version>
 	</parent>
-	
+
 	<groupId>davis.gametracker</groupId>
 	<artifactId>parent</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	
+
 	<name>GameTracker Application Parent POM</name>
 	<description>Common parent POM for the gametracker application</description>
 
@@ -33,6 +33,54 @@
 	</properties>
 
 	<dependencyManagement>
+		<dependencies>
+			<!-- APPLICATION DEPS -->
+
+			<!-- TEST DEPS -->
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-test</artifactId>
+				<version>${spring.boot.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.junit</groupId>
+				<artifactId>junit</artifactId>
+				<scope>test</scope>
+			</dependency>
+			
+			<!-- THIS APP -->
+			<dependency>
+				<groupId>davis.gametracker</groupId>
+				<artifactId>application</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>davis.gametracker</groupId>
+				<artifactId>controller</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>davis.gametracker</groupId>
+				<artifactId>domain.db</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>davis.gametracker</groupId>
+				<artifactId>presentation</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>davis.gametracker</groupId>
+				<artifactId>repository</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>davis.gametracker</groupId>
+				<artifactId>service</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+		</dependencies>
 	</dependencyManagement>
 
 	<build>
