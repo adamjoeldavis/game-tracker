@@ -18,8 +18,11 @@ import org.springframework.context.annotation.Import;
  * @author Adam Davis
  */
 @SpringBootApplication
-@ComponentScan(excludeFilters = { @Filter(type = FilterType.REGEX, pattern = { ".*/config/ModuleConfiguration" }) })
-@Import({ davis.gametracker.controller.config.ModuleConfiguration.class })
+@ComponentScan(excludeFilters = {
+		@Filter(type = FilterType.REGEX, pattern = { ".*/config/ModuleConfiguration" }) })
+@Import({ davis.gametracker.controller.config.ModuleConfiguration.class,
+		davis.gametracker.domain.db.config.ModuleConfiguration.class,
+		davis.gametracker.repository.config.ModuleConfiguration.class })
 public class Application
 {
 	public static void main(String... args) throws Exception

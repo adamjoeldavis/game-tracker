@@ -48,4 +48,11 @@ public class Game extends EntityBase<Game, Integer>
 	{
 		this.description = description;
 	}
+
+	public Game ownedOn(System system)
+	{
+		ownedOn.add(system);
+
+		return this;
+	}
 }
