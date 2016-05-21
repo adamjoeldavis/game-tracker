@@ -4,39 +4,33 @@ import java.util.Comparator;
 import java.util.Set;
 import java.util.TreeSet;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.OrderBy;
 
 @Entity
-public class Game extends EntityBase<Game, Integer>
+public class Game extends EntityBase<Game, Integer, String>
 {
-	private String		name;
+	private String			description;
 
-	private String		description;
-
-	@ManyToMany
+	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
 	@OrderBy("id")
-	private Set<System>	ownedOn	= new TreeSet<>(Comparator.comparing(System::getId));
+	private Set<GameSystem>	ownedOn	= new TreeSet<>(Comparator.comparing(GameSystem::getId));
 
-	public Game()
+	protected Game()
 	{
-		;
+		; // for hibernate
 	}
 
 	public Game(String name)
 	{
-		setName(name);
+		setId(name);
 	}
 
 	public String getName()
 	{
-		return name;
-	}
-
-	public void setName(String name)
-	{
-		this.name = name;
+		return getId();
 	}
 
 	public String getDescription()
@@ -44,12 +38,14 @@ public class Game extends EntityBase<Game, Integer>
 		return description;
 	}
 
-	public void setDescription(String description)
+	public Game setDescription(String description)
 	{
 		this.description = description;
+
+		return this;
 	}
 
-	public Game ownedOn(System system)
+	public Game ownedOn(GameSystem system)
 	{
 		ownedOn.add(system);
 

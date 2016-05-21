@@ -3,23 +3,20 @@ package davis.gametracker.domain.db;
 import javax.persistence.Entity;
 
 @Entity
-public class System extends EntityBase<System, Integer>
+public class GameSystem extends EntityBase<GameSystem, Integer, String>
 {
 	private String	name;
 
-	private String	id;
-
 	private String	description;
 
-	public System()
+	protected GameSystem()
 	{
-		;
+		; // for hibernate
 	}
 
-	public System(String id, String name)
+	public GameSystem(String id)
 	{
 		setId(id);
-		setName(name);
 	}
 
 	public String getName()
@@ -27,19 +24,11 @@ public class System extends EntityBase<System, Integer>
 		return name;
 	}
 
-	public void setName(String name)
+	public GameSystem setName(String name)
 	{
 		this.name = name;
-	}
 
-	public String getId()
-	{
-		return id;
-	}
-
-	public void setId(String id)
-	{
-		this.id = id;
+		return this;
 	}
 
 	public String getDescription()
@@ -47,8 +36,10 @@ public class System extends EntityBase<System, Integer>
 		return description;
 	}
 
-	public void setDescription(String description)
+	public GameSystem setDescription(String description)
 	{
 		this.description = description;
+
+		return this;
 	}
 }

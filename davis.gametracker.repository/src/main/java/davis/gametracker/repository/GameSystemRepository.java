@@ -5,10 +5,10 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import davis.gametracker.domain.db.Game;
+import davis.gametracker.domain.db.GameSystem;
 
 @Repository
-public interface GameRepository extends JpaRepository<Game, Integer>
+public interface GameSystemRepository extends JpaRepository<GameSystem, Integer>
 {
-	public List<Game> findByOwnedOn_Id(String systemId);
+	public List<GameSystem> findById(String id);
 }
