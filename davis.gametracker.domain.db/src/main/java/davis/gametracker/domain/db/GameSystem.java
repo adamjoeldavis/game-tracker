@@ -5,9 +5,7 @@ import javax.persistence.Entity;
 @Entity
 public class GameSystem extends EntityBase<GameSystem, Integer, String>
 {
-	private String	name;
-
-	private String	description;
+	private String name;
 
 	protected GameSystem()
 	{
@@ -27,18 +25,6 @@ public class GameSystem extends EntityBase<GameSystem, Integer, String>
 	public GameSystem setName(String name)
 	{
 		this.name = name;
-
-		return this;
-	}
-
-	public String getDescription()
-	{
-		return description;
-	}
-
-	public GameSystem setDescription(String description)
-	{
-		this.description = description;
 
 		return this;
 	}

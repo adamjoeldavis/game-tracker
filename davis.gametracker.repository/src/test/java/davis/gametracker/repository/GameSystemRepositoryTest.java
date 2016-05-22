@@ -1,7 +1,5 @@
 package davis.gametracker.repository;
 
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,9 +44,8 @@ public class GameSystemRepositoryTest extends RepositoryTestBase
 
 		Assert.assertEquals(2, repository.count());
 
-		List<GameSystem> foundSystems = repository.findById(expectedId);
+		GameSystem foundSystem = repository.findById(expectedId);
 
-		Assert.assertEquals(1, foundSystems.size());
-		Assert.assertEquals(expectedId, foundSystems.get(0).getId());
+		Assert.assertEquals(expectedId, foundSystem.getId());
 	}
 }

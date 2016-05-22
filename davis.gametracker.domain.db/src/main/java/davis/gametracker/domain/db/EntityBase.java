@@ -4,6 +4,7 @@ import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
@@ -14,7 +15,7 @@ import org.hibernate.annotations.NaturalId;
 public abstract class EntityBase<E extends EntityBase<E, K, ID>, K, ID>
 {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private K		primaryKey;
 
 	@Version

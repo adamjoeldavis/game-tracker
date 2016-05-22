@@ -20,6 +20,7 @@
 		<module>../davis.gametracker.application</module>
 		<module>../davis.gametracker.controller</module>
 		<module>../davis.gametracker.domain.db</module>
+		<module>../davis.gametracker.domain.json</module>
 		<module>../davis.gametracker.presentation</module>
 		<module>../davis.gametracker.repository</module>
 		<module>../davis.gametracker.service</module>
@@ -69,6 +70,11 @@
 			<dependency>
 				<groupId>davis.gametracker</groupId>
 				<artifactId>domain.db</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>davis.gametracker</groupId>
+				<artifactId>domain.json</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>

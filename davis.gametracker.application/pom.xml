@@ -30,6 +30,10 @@
 		</dependency>
 		<dependency>
 			<groupId>davis.gametracker</groupId>
+			<artifactId>domain.json</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>davis.gametracker</groupId>
 			<artifactId>presentation</artifactId>
 		</dependency>
 		<dependency>

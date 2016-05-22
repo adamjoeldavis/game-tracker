@@ -4,7 +4,6 @@ import java.util.Comparator;
 import java.util.Set;
 import java.util.TreeSet;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.OrderBy;
@@ -12,11 +11,9 @@ import javax.persistence.OrderBy;
 @Entity
 public class Game extends EntityBase<Game, Integer, String>
 {
-	private String			description;
-
-	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+	@ManyToMany
 	@OrderBy("id")
-	private Set<GameSystem>	ownedOn	= new TreeSet<>(Comparator.comparing(GameSystem::getId));
+	private Set<GameSystem> ownedOn = new TreeSet<>(Comparator.comparing(GameSystem::getId));
 
 	protected Game()
 	{
@@ -33,22 +30,15 @@ public class Game extends EntityBase<Game, Integer, String>
 		return getId();
 	}
 
-	public String getDescription()
-	{
-		return description;
-	}
-
-	public Game setDescription(String description)
-	{
-		this.description = description;
-
-		return this;
-	}
-
 	public Game ownedOn(GameSystem system)
 	{
 		ownedOn.add(system);
 
 		return this;
+	}
+
+	public Set<GameSystem> getOwnedOn()
+	{
+		return ownedOn;
 	}
 }

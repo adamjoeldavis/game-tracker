@@ -14,7 +14,10 @@ import davis.gametracker.domain.db.GameSystem;
 public class GameRepositoryTest extends RepositoryTestBase
 {
 	@Autowired
-	private GameRepository repository;
+	private GameRepository			gameRepository;
+
+	@Autowired
+	private GameSystemRepository	systemRepository;
 
 	@Test
 	public void testInjection()
@@ -25,21 +28,21 @@ public class GameRepositoryTest extends RepositoryTestBase
 	@Test
 	public void testFindBySystemId()
 	{
-		// insert a few records
-		GameSystem ps4 = new GameSystem("PS4");
-		GameSystem xbox360 = new GameSystem("X1");
+		GameSystem ps4 = systemRepository.save(new GameSystem("PS4"));
+		GameSystem xbox360 = systemRepository.save(new GameSystem("X360"));
+		systemRepository.flush();
 
 		Game bloodborne = new Game("Bloodborne").ownedOn(ps4);
 		Game callOfDuty = new Game("Call of Duty").ownedOn(ps4).ownedOn(xbox360);
 		Game gtaV = new Game("Grand Theft Auto V").ownedOn(ps4).ownedOn(xbox360);
 		Game fable = new Game("Fable").ownedOn(xbox360);
 
-		repository.save(Lists.newArrayList(bloodborne, callOfDuty, gtaV, fable));
-		repository.flush(); // make sure they're committed
+		gameRepository.save(Lists.newArrayList(bloodborne, callOfDuty, gtaV, fable));
+		gameRepository.flush(); // make sure they're committed
 
-		Assert.assertEquals(4, repository.count());
+		Assert.assertEquals(4, gameRepository.count());
 
-		List<Game> ps4Games = repository.findByOwnedOn_Id(ps4.getId());
+		List<Game> ps4Games = gameRepository.findByOwnedOn_Id(ps4.getId());
 		Assert.assertEquals(3, ps4Games.size());
 
 		// make sure all the correct games are there
@@ -55,10 +58,10 @@ public class GameRepositoryTest extends RepositoryTestBase
 	{
 		final String duplicateId = "Bloodborne";
 
-		repository.saveAndFlush(new Game(duplicateId));
+		gameRepository.saveAndFlush(new Game(duplicateId));
 		try
 		{
-			repository.saveAndFlush(new Game(duplicateId));
+			gameRepository.saveAndFlush(new Game(duplicateId));
 			Assert.fail();
 		} catch (Exception exception)
 		{
