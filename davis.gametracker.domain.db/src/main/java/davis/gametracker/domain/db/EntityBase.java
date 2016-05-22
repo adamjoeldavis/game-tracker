@@ -14,16 +14,18 @@ import org.hibernate.annotations.NaturalId;
 @MappedSuperclass
 public abstract class EntityBase<E extends EntityBase<E, K, ID>, K, ID>
 {
+	public static final String	DEFAULT_SORT_COLUMN	= "id";
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private K		primaryKey;
+	private K					primaryKey;
 
 	@Version
-	private long	version;
+	private long				version;
 
 	@NaturalId
 	@Column(insertable = true, updatable = false, nullable = false)
-	private ID		id;
+	private ID					id;
 
 	public K getPrimaryKey()
 	{

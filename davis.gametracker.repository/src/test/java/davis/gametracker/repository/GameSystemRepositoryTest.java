@@ -1,11 +1,18 @@
 package davis.gametracker.repository;
 
-import org.junit.Assert;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import davis.gametracker.domain.db.GameSystem;
 
+/**
+ * Integration tests for the {@link GameSystemRepository} class
+ * 
+ * @author Adam Davis
+ */
 public class GameSystemRepositoryTest extends RepositoryTestBase
 {
 	@Autowired
@@ -18,7 +25,7 @@ public class GameSystemRepositoryTest extends RepositoryTestBase
 	}
 
 	@Test
-	public void testUniqueNaturalId()
+	public void testUniqueNaturalId_PreventsSave()
 	{
 		final String duplicateId = "PS4";
 
@@ -26,7 +33,7 @@ public class GameSystemRepositoryTest extends RepositoryTestBase
 		try
 		{
 			repository.saveAndFlush(new GameSystem(duplicateId));
-			Assert.fail();
+			fail();
 		} catch (Exception exception)
 		{
 			; // expected
@@ -36,16 +43,17 @@ public class GameSystemRepositoryTest extends RepositoryTestBase
 	@Test
 	public void testFindById()
 	{
+		// prepare for the test by inserting some data
 		final String expectedId = "PS4";
 		final String unexpectedId = "PS3";
 
 		repository.saveAndFlush(new GameSystem(expectedId));
 		repository.saveAndFlush(new GameSystem(unexpectedId));
 
-		Assert.assertEquals(2, repository.count());
+		assertEquals(2, repository.count());
 
 		GameSystem foundSystem = repository.findById(expectedId);
 
-		Assert.assertEquals(expectedId, foundSystem.getId());
+		assertEquals(expectedId, foundSystem.getId());
 	}
 }

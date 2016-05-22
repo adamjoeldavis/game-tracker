@@ -4,16 +4,24 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * View of the Game entity
+ * 
+ * @author Adam Davis
+ */
 public class GameData
 {
 	private String					name;
 
 	private List<GameSystemData>	ownedOn	= new ArrayList<>();
 
+	/**
+	 * This is necessary for jackson deserialization
+	 */
 	@SuppressWarnings("unused")
 	private GameData()
 	{
-		; // for jackson
+		;
 	}
 
 	public GameData(String name)

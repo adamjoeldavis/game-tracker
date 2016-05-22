@@ -2,16 +2,24 @@ package davis.gametracker.domain.json;
 
 import java.util.Objects;
 
+/**
+ * View of a GameSystem entity
+ * 
+ * @author Adam Davis
+ */
 public class GameSystemData
 {
 	private String	id;
 
 	private String	name;
 
+	/**
+	 * This is necessary for jackson deserialization
+	 */
 	@SuppressWarnings("unused")
 	private GameSystemData()
 	{
-		; // for jackson
+		;
 	}
 
 	public GameSystemData(String id)

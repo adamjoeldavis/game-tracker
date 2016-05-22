@@ -1,5 +1,6 @@
 package davis.gametracker.service.impl;
 
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,21 +9,30 @@ import org.springframework.stereotype.Service;
 import davis.gametracker.domain.db.Game;
 import davis.gametracker.domain.json.GameData;
 import davis.gametracker.domain.json.GameSystemData;
-import davis.gametracker.service.GameConverter;
-import davis.gametracker.service.GameSystemConverter;
-import davis.gametracker.service.GameSystemService;
+import davis.gametracker.service.game.GameConverter;
+import davis.gametracker.service.gamesystem.GameSystemConverter;
+import davis.gametracker.service.gamesystem.GameSystemService;
 
+/**
+ * Converter service implementation for {@link Game} entities
+ * 
+ * @author Adam Davis
+ */
 @Service
 public class GameConverterImpl implements GameConverter
 {
 	private GameSystemConverter	systemConverter;
 	private GameSystemService	systemService;
 
+	/**
+	 * @param systemConverter
+	 * @param systemService
+	 */
 	@Autowired
 	public GameConverterImpl(GameSystemConverter systemConverter, GameSystemService systemService)
 	{
-		assert (systemConverter != null);
-		assert (systemService != null);
+		Objects.requireNonNull(systemConverter);
+		Objects.requireNonNull(systemService);
 
 		this.systemConverter = systemConverter;
 		this.systemService = systemService;
@@ -31,7 +41,8 @@ public class GameConverterImpl implements GameConverter
 	@Override
 	public void populate(Game record, GameData data)
 	{
-		assert (data != null);
+		Objects.requireNonNull(data);
+		Objects.requireNonNull(record);
 
 		for (GameSystemData system : data.getOwnedOn())
 		{
@@ -40,9 +51,9 @@ public class GameConverterImpl implements GameConverter
 	}
 
 	@Override
-	public Game initialize(GameData data)
+	public Game toRecord(GameData data)
 	{
-		assert (data != null);
+		Objects.requireNonNull(data);
 
 		Game newGame = new Game(data.getName());
 
@@ -52,16 +63,13 @@ public class GameConverterImpl implements GameConverter
 	}
 
 	@Override
-	public GameData convert(Game record)
+	public GameData toView(Game record)
 	{
-		if (record == null)
-		{
-			return null;
-		}
+		Objects.requireNonNull(record);
 
 		return new GameData(record.getName())
 				.setOwnedOn(record.getOwnedOn().stream()
-						.map(systemConverter::convert)
+						.map(systemConverter::toView)
 						.collect(Collectors.toList()));
 	}
 

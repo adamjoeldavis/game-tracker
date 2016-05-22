@@ -2,7 +2,6 @@ package davis.gametracker.controller;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
 import java.util.Collection;
@@ -22,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.google.common.collect.Lists;
 
 import davis.gametracker.controller.config.TestModuleConfiguration;
+import davis.gametracker.controller.game.GameController;
 import davis.gametracker.domain.db.Game;
 import davis.gametracker.domain.db.GameSystem;
 import davis.gametracker.domain.json.GameData;
@@ -39,8 +39,21 @@ import davis.gametracker.repository.GameSystemRepository;
 @Transactional
 public class GameControllerTest
 {
+	/**
+	 * Names of the default game entries to add before each test
+	 */
 	private static final List<String>	DEFAULT_GAMES	= Lists.newArrayList("Bloodborne", "GTA V");
+
+	/**
+	 * ID of the default game system that each entry in {@link #DEFAULT_GAMES}
+	 * will be assiged to
+	 */
 	private static final String			DEFAULT_SYSTEM	= "PS4";
+
+	/**
+	 * ID of an existing, but unused, GameSystem entry. Useful for testing
+	 * modifications to existing Game records
+	 */
 	private static final String			UNUSED_SYSTEM	= "PS3";
 
 	@Autowired
@@ -50,10 +63,21 @@ public class GameControllerTest
 	private GameSystemRepository		systemRepository;
 
 	@Autowired
-	private GameController				controller;
+	private GameController				gameController;
 
+	/**
+	 * Mapping of {@link Game#getName()} => {@link Game#getPrimaryKey()} for
+	 * each entry in {@link #DEFAULT_GAMES} that was added during
+	 * {@link #loadData()}. Used to map of record keys to known records without
+	 * having to rely on the underlying database's identity creation mechanism.
+	 */
 	private Map<String, Integer>		defaultGameRecords;
 
+	/**
+	 * Loads default data before every test. Will create a {@link GameSystem}
+	 * record for both {@link #DEFAULT_SYSTEM} and {@link #UNUSED_SYSTEM}. Will
+	 * also create {@link Game} records for each {@link #DEFAULT_GAMES} entry.
+	 */
 	@Before
 	public void loadData()
 	{
@@ -75,7 +99,7 @@ public class GameControllerTest
 	@Test
 	public void testListGames()
 	{
-		List<GameData> games = controller.listGames();
+		List<GameData> games = gameController.list();
 
 		assertEquals(games.size(), DEFAULT_GAMES.size());
 
@@ -90,7 +114,7 @@ public class GameControllerTest
 	{
 		Integer gameKey = defaultGameRecords.get(DEFAULT_GAMES.get(0));
 
-		GameData loadedGame = controller.getGame(gameKey);
+		GameData loadedGame = gameController.get(gameKey);
 
 		standardAssertions(loadedGame, DEFAULT_GAMES.get(0), DEFAULT_SYSTEM);
 	}
@@ -108,23 +132,28 @@ public class GameControllerTest
 			;
 		}
 
-		GameData loadedGame = controller.getGame(falseGameKey);
-
-		assertNull(loadedGame);
+		try
+		{
+			gameController.get(falseGameKey);
+			fail();
+		} catch (IllegalArgumentException exception)
+		{
+			; // expected
+		}
 	}
 
 	@Test
-	public void testAddGame()
+	public void testAddGame_Success()
 	{
 		final String gameName = "Dark Souls III";
 		GameData newGame = new GameData(gameName);
 		newGame.getOwnedOn().add(new GameSystemData(DEFAULT_SYSTEM));
 
-		GameData savedVersion = controller.addGame(newGame);
+		GameData savedVersion = gameController.add(newGame);
 
 		standardAssertions(savedVersion, gameName, DEFAULT_SYSTEM);
 
-		List<GameData> games = controller.listGames();
+		List<GameData> games = gameController.list();
 
 		assertEquals(DEFAULT_GAMES.size() + 1, games.size());
 	}
@@ -136,7 +165,7 @@ public class GameControllerTest
 
 		try
 		{
-			controller.addGame(duplicateGame);
+			gameController.add(duplicateGame);
 			fail();
 		} catch (Exception exception)
 		{
@@ -145,7 +174,7 @@ public class GameControllerTest
 	}
 
 	@Test
-	public void testUpdateGame()
+	public void testUpdateGame_Success()
 	{
 		GameData existingGame = new GameData(DEFAULT_GAMES.get(0));
 		existingGame.getOwnedOn().add(new GameSystemData(DEFAULT_SYSTEM));
@@ -153,12 +182,30 @@ public class GameControllerTest
 		// this is the modification
 		existingGame.getOwnedOn().add(new GameSystemData(UNUSED_SYSTEM));
 
-		GameData savedVersion = controller
-				.updateGame(defaultGameRecords.get(existingGame.getName()), existingGame);
+		GameData savedVersion = gameController
+				.update(defaultGameRecords.get(existingGame.getName()), existingGame);
 
 		standardAssertions(savedVersion, DEFAULT_GAMES.get(0), UNUSED_SYSTEM, DEFAULT_SYSTEM);
 	}
 
+	/**
+	 * Perform a set of standard assertions against the given GameDat object.
+	 * Checks the following:
+	 * <ul>
+	 * <li>game is not null
+	 * <li>the game's name matches exactly the given name
+	 * <li>the game's list of "ownedOn" systems matches the given systems list,
+	 * in the same order
+	 * </ul>
+	 * 
+	 * @param game
+	 *            object on which to assert
+	 * @param name
+	 *            expected exact name of the given object
+	 * @param systems
+	 *            expected list of GameSystem IDs that this game is "ownedOn",
+	 *            in the correct order
+	 */
 	private static void standardAssertions(GameData game, String name, String... systems)
 	{
 		assertNotNull(game);

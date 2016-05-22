@@ -1,8 +1,11 @@
 package davis.gametracker.repository;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.util.List;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -11,6 +14,11 @@ import com.google.common.collect.Lists;
 import davis.gametracker.domain.db.Game;
 import davis.gametracker.domain.db.GameSystem;
 
+/**
+ * Integration tests for the {@link GameRepository} class
+ * 
+ * @author Adam Davis
+ */
 public class GameRepositoryTest extends RepositoryTestBase
 {
 	@Autowired
@@ -28,6 +36,7 @@ public class GameRepositoryTest extends RepositoryTestBase
 	@Test
 	public void testFindBySystemId()
 	{
+		// prepare for the test by inserting data
 		GameSystem ps4 = systemRepository.save(new GameSystem("PS4"));
 		GameSystem xbox360 = systemRepository.save(new GameSystem("X360"));
 		systemRepository.flush();
@@ -40,21 +49,21 @@ public class GameRepositoryTest extends RepositoryTestBase
 		gameRepository.save(Lists.newArrayList(bloodborne, callOfDuty, gtaV, fable));
 		gameRepository.flush(); // make sure they're committed
 
-		Assert.assertEquals(4, gameRepository.count());
+		assertEquals(4, gameRepository.count());
 
 		List<Game> ps4Games = gameRepository.findByOwnedOn_Id(ps4.getId());
-		Assert.assertEquals(3, ps4Games.size());
+		assertEquals(3, ps4Games.size());
 
 		// make sure all the correct games are there
-		Assert.assertTrue(
+		assertTrue(
 				ps4Games.stream().anyMatch(g -> g.getName().equals(bloodborne.getName())));
-		Assert.assertTrue(
+		assertTrue(
 				ps4Games.stream().anyMatch(g -> g.getName().equals(callOfDuty.getName())));
-		Assert.assertTrue(ps4Games.stream().anyMatch(g -> g.getName().equals(gtaV.getName())));
+		assertTrue(ps4Games.stream().anyMatch(g -> g.getName().equals(gtaV.getName())));
 	}
 
 	@Test
-	public void testUniqueNaturalId()
+	public void testUniqueNaturalId_PreventsSave()
 	{
 		final String duplicateId = "Bloodborne";
 
@@ -62,7 +71,7 @@ public class GameRepositoryTest extends RepositoryTestBase
 		try
 		{
 			gameRepository.saveAndFlush(new Game(duplicateId));
-			Assert.fail();
+			fail();
 		} catch (Exception exception)
 		{
 			; // expected

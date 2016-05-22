@@ -6,6 +6,11 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import davis.gametracker.repository.GameRepository;
 
+/**
+ * Module configuration
+ * 
+ * @author Adam Davis
+ */
 @Configuration
 @EnableJpaRepositories(basePackageClasses = GameRepository.class)
 @Import({ davis.gametracker.domain.db.config.ModuleConfiguration.class })

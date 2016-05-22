@@ -6,6 +6,11 @@ import org.springframework.context.annotation.Import;
 
 import davis.gametracker.service.impl.GameSystemConverterImpl;
 
+/**
+ * Module configuration
+ * 
+ * @author Adam Davis
+ */
 @Configuration
 @ComponentScan(basePackageClasses = GameSystemConverterImpl.class)
 @Import(davis.gametracker.repository.config.ModuleConfiguration.class)

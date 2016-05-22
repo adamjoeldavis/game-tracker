@@ -4,7 +4,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
-import davis.gametracker.controller.GameController;
+import davis.gametracker.controller.game.GameController;
+import davis.gametracker.controller.gamesystem.GameSystemController;
 
 /**
  * Module configuration
@@ -12,7 +13,7 @@ import davis.gametracker.controller.GameController;
  * @author Adam Davis
  */
 @Configuration
-@ComponentScan(basePackageClasses = { GameController.class })
+@ComponentScan(basePackageClasses = { GameController.class, GameSystemController.class })
 @Import(davis.gametracker.service.config.ModuleConfiguration.class)
 public class ModuleConfiguration
 {

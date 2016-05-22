@@ -7,6 +7,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import davis.gametracker.repository.config.TestModuleConfiguration;
 
+/**
+ * Base integration test class for repositories. Handles annotation
+ * configurations.
+ * 
+ * @author Adam Davis
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = TestModuleConfiguration.class)
 @Transactional
