@@ -44,21 +44,21 @@ public class GameSystemController extends
     }
 
     @Override
-    @RequestMapping(method = RequestMethod.GET, value = "/gameSystem/{id}")
+    @RequestMapping(method = RequestMethod.GET, value = "/gameSystems/{id}")
     public GameSystemData get(@PathVariable("id") Integer primaryKey)
     {
         return super.get(primaryKey);
     }
 
     @Override
-    @RequestMapping(method = RequestMethod.PUT, value = "/gameSystem")
+    @RequestMapping(method = RequestMethod.POST, value = "/gameSystems")
     public GameSystemData add(@RequestBody GameSystemData details)
     {
         return super.add(details);
     }
 
     @Override
-    @RequestMapping(method = RequestMethod.POST, value = "/gameSystem/{id}")
+    @RequestMapping(method = RequestMethod.PUT, value = "/gameSystems/{id}")
     public GameSystemData update(@PathVariable("id") Integer primaryKey,
             @RequestBody GameSystemData details)
     {

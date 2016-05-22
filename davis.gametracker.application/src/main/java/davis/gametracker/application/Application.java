@@ -23,7 +23,8 @@ import org.springframework.context.annotation.Import;
 @Import({ davis.gametracker.controller.config.ModuleConfiguration.class,
         davis.gametracker.domain.db.config.ModuleConfiguration.class,
         davis.gametracker.repository.config.ModuleConfiguration.class,
-        davis.gametracker.service.config.ModuleConfiguration.class })
+        davis.gametracker.service.config.ModuleConfiguration.class,
+        davis.gametracker.presentation.config.ModuleConfiguration.class })
 public class Application
 {
     public static void main(String... args) throws Exception
