@@ -4,19 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-@JsonInclude
 public class GameData
 {
-	@JsonProperty
 	private String					name;
 
-	@JsonProperty
-	private String					description;
-
-	@JsonProperty
 	private List<GameSystemData>	ownedOn	= new ArrayList<>();
 
 	@SuppressWarnings("unused")

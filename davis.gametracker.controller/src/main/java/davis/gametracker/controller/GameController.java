@@ -7,7 +7,9 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,6 +24,7 @@ import davis.gametracker.service.GameService;
  * @author Adam Davis
  */
 @RestController
+@CrossOrigin // TODO remove when done testing
 public class GameController
 {
 	private final Logger	log	= LoggerFactory.getLogger(getClass());
@@ -59,7 +62,7 @@ public class GameController
 	}
 
 	@RequestMapping(method = RequestMethod.PUT, value = "/game")
-	public GameData addGame(GameData details)
+	public GameData addGame(@RequestBody GameData details)
 	{
 		log.info("In method: {} with details {}", "addGame", details);
 
@@ -67,7 +70,7 @@ public class GameController
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/game/{id}")
-	public GameData updateGame(@PathVariable("id") int id, GameData details)
+	public GameData updateGame(@PathVariable("id") int id, @RequestBody GameData details)
 	{
 		log.info("In method: {} for id {} with details {}", "updateGame", id, details);
 

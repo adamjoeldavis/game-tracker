@@ -2,16 +2,10 @@ package davis.gametracker.domain.json;
 
 import java.util.Objects;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-@JsonInclude
 public class GameSystemData
 {
-	@JsonProperty
 	private String	id;
 
-	@JsonProperty
 	private String	name;
 
 	@SuppressWarnings("unused")
