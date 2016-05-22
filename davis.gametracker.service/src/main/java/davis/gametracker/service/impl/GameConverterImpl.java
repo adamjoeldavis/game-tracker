@@ -21,56 +21,56 @@ import davis.gametracker.service.gamesystem.GameSystemService;
 @Service
 public class GameConverterImpl implements GameConverter
 {
-	private GameSystemConverter	systemConverter;
-	private GameSystemService	systemService;
+    private GameSystemConverter systemConverter;
+    private GameSystemService   systemService;
 
-	/**
-	 * @param systemConverter
-	 * @param systemService
-	 */
-	@Autowired
-	public GameConverterImpl(GameSystemConverter systemConverter, GameSystemService systemService)
-	{
-		Objects.requireNonNull(systemConverter);
-		Objects.requireNonNull(systemService);
+    /**
+     * @param systemConverter
+     * @param systemService
+     */
+    @Autowired
+    public GameConverterImpl(GameSystemConverter systemConverter, GameSystemService systemService)
+    {
+        Objects.requireNonNull(systemConverter);
+        Objects.requireNonNull(systemService);
 
-		this.systemConverter = systemConverter;
-		this.systemService = systemService;
-	}
+        this.systemConverter = systemConverter;
+        this.systemService = systemService;
+    }
 
-	@Override
-	public void populate(Game record, GameData data)
-	{
-		Objects.requireNonNull(data);
-		Objects.requireNonNull(record);
+    @Override
+    public void populate(Game record, GameData data)
+    {
+        Objects.requireNonNull(data);
+        Objects.requireNonNull(record);
 
-		for (GameSystemData system : data.getOwnedOn())
-		{
-			record.ownedOn(systemService.load(system.getId()));
-		}
-	}
+        for (GameSystemData system : data.getOwnedOn())
+        {
+            record.ownedOn(systemService.load(system.getId()));
+        }
+    }
 
-	@Override
-	public Game toRecord(GameData data)
-	{
-		Objects.requireNonNull(data);
+    @Override
+    public Game toRecord(GameData data)
+    {
+        Objects.requireNonNull(data);
 
-		Game newGame = new Game(data.getName());
+        Game newGame = new Game(data.getName());
 
-		populate(newGame, data);
+        populate(newGame, data);
 
-		return newGame;
-	}
+        return newGame;
+    }
 
-	@Override
-	public GameData toView(Game record)
-	{
-		Objects.requireNonNull(record);
+    @Override
+    public GameData toView(Game record)
+    {
+        Objects.requireNonNull(record);
 
-		return new GameData(record.getName())
-				.setOwnedOn(record.getOwnedOn().stream()
-						.map(systemConverter::toView)
-						.collect(Collectors.toList()));
-	}
+        return new GameData(record.getName())
+                .setOwnedOn(record.getOwnedOn().stream()
+                        .map(systemConverter::toView)
+                        .collect(Collectors.toList()));
+    }
 
 }

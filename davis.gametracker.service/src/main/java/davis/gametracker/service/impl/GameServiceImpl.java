@@ -24,70 +24,70 @@ import davis.gametracker.service.game.GameService;
 @Service
 public class GameServiceImpl implements GameService
 {
-	private final Logger	log	= LoggerFactory.getLogger(getClass());
+    private final Logger   log = LoggerFactory.getLogger(getClass());
 
-	private GameConverter	converter;
-	private GameRepository	repository;
+    private GameConverter  converter;
+    private GameRepository repository;
 
-	@Autowired
-	public GameServiceImpl(GameConverter converter, GameRepository repository)
-	{
-		Objects.requireNonNull(converter);
-		Objects.requireNonNull(repository);
+    @Autowired
+    public GameServiceImpl(GameConverter converter, GameRepository repository)
+    {
+        Objects.requireNonNull(converter);
+        Objects.requireNonNull(repository);
 
-		this.converter = converter;
-		this.repository = repository;
-	}
+        this.converter = converter;
+        this.repository = repository;
+    }
 
-	@Override
-	public Game create(GameData newGame)
-	{
-		Objects.requireNonNull(newGame);
+    @Override
+    public Game create(GameData newGame)
+    {
+        Objects.requireNonNull(newGame);
 
-		return repository.saveAndFlush(converter.toRecord(newGame));
-	}
+        return repository.saveAndFlush(converter.toRecord(newGame));
+    }
 
-	@Override
-	public Game update(Integer primaryKey, GameData contents) throws IllegalArgumentException
-	{
-		Objects.requireNonNull(primaryKey);
-		Objects.requireNonNull(contents);
+    @Override
+    public Game update(Integer primaryKey, GameData contents) throws IllegalArgumentException
+    {
+        Objects.requireNonNull(primaryKey);
+        Objects.requireNonNull(contents);
 
-		Game existingGame = load(primaryKey);
+        Game existingGame = load(primaryKey);
 
-		if (existingGame == null)
-		{
-			log.error("Invalid key passed to update: {}", primaryKey);
+        if (existingGame == null)
+        {
+            log.error("Invalid key passed to update: {}", primaryKey);
 
-			throw new IllegalArgumentException("Given key is invalid");
-		}
+            throw new IllegalArgumentException("Given key is invalid");
+        }
 
-		converter.populate(existingGame, contents);
+        converter.populate(existingGame, contents);
 
-		return repository.saveAndFlush(existingGame);
-	}
+        return repository.saveAndFlush(existingGame);
+    }
 
-	@Override
-	public Game load(Integer primaryKey) throws IllegalArgumentException
-	{
-		Objects.requireNonNull(primaryKey);
+    @Override
+    public Game load(Integer primaryKey) throws IllegalArgumentException
+    {
+        Objects.requireNonNull(primaryKey);
 
-		Game loadedGame = repository.findOne(primaryKey);
+        Game loadedGame = repository.findOne(primaryKey);
 
-		if (loadedGame == null)
-		{
-			log.error("Invalid key passed to load: {}", primaryKey);
+        if (loadedGame == null)
+        {
+            log.error("Invalid key passed to load: {}", primaryKey);
 
-			throw new IllegalArgumentException("Given key is invalid");
-		}
+            throw new IllegalArgumentException("Given key is invalid");
+        }
 
-		return loadedGame;
-	}
+        return loadedGame;
+    }
 
-	@Override
-	public List<Game> list()
-	{
-		return repository.findAll(new Sort(EntityBase.DEFAULT_SORT_COLUMN));
-	}
+    @Override
+    public List<Game> list()
+    {
+        return repository.findAll(new Sort(EntityBase.DEFAULT_SORT_COLUMN));
+    }
 
 }

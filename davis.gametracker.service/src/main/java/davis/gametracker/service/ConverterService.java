@@ -15,31 +15,31 @@ import davis.gametracker.domain.db.EntityBase;
  */
 public interface ConverterService<E extends EntityBase<E, ?, ?>, V>
 {
-	/**
-	 * Populates the given JPA entity with the contents of the given view
-	 * 
-	 * @param record
-	 *            JPA entity to populate
-	 * @param view
-	 *            contents to populate into the record
-	 */
-	public void populate(E record, V view);
+    /**
+     * Populates the given JPA entity with the contents of the given view
+     * 
+     * @param record
+     *            JPA entity to populate
+     * @param view
+     *            contents to populate into the record
+     */
+    public void populate(E record, V view);
 
-	/**
-	 * Converts the given view instance into its matching JPA entity counterpart
-	 * 
-	 * @param view
-	 *            view to convert
-	 * @return converted record
-	 */
-	public E toRecord(V view);
+    /**
+     * Converts the given view instance into its matching JPA entity counterpart
+     * 
+     * @param view
+     *            view to convert
+     * @return converted record
+     */
+    public E toRecord(V view);
 
-	/**
-	 * Converts the given JPA entity into its matching view counterpart
-	 * 
-	 * @param record
-	 *            JPA entity to convert
-	 * @return converted view
-	 */
-	public V toView(E record);
+    /**
+     * Converts the given JPA entity into its matching view counterpart
+     * 
+     * @param record
+     *            JPA entity to convert
+     * @return converted view
+     */
+    public V toView(E record);
 }

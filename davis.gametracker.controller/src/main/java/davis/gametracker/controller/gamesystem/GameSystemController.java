@@ -24,44 +24,44 @@ import davis.gametracker.service.gamesystem.GameSystemService;
 @RestController
 @CrossOrigin // TODO remove
 public class GameSystemController extends
-		CrudController<Integer, GameSystem, GameSystemData, GameSystemService, GameSystemConverter>
+        CrudController<Integer, GameSystem, GameSystemData, GameSystemService, GameSystemConverter>
 {
-	/**
-	 * @param service
-	 * @param converter
-	 */
-	@Autowired
-	public GameSystemController(GameSystemService service, GameSystemConverter converter)
-	{
-		super(service, converter);
-	}
+    /**
+     * @param service
+     * @param converter
+     */
+    @Autowired
+    public GameSystemController(GameSystemService service, GameSystemConverter converter)
+    {
+        super(service, converter);
+    }
 
-	@Override
-	@RequestMapping(method = RequestMethod.GET, value = "/gameSystems")
-	public List<GameSystemData> list()
-	{
-		return super.list();
-	}
+    @Override
+    @RequestMapping(method = RequestMethod.GET, value = "/gameSystems")
+    public List<GameSystemData> list()
+    {
+        return super.list();
+    }
 
-	@Override
-	@RequestMapping(method = RequestMethod.GET, value = "/gameSystem/{id}")
-	public GameSystemData get(@PathVariable("id") Integer primaryKey)
-	{
-		return super.get(primaryKey);
-	}
+    @Override
+    @RequestMapping(method = RequestMethod.GET, value = "/gameSystem/{id}")
+    public GameSystemData get(@PathVariable("id") Integer primaryKey)
+    {
+        return super.get(primaryKey);
+    }
 
-	@Override
-	@RequestMapping(method = RequestMethod.PUT, value = "/gameSystem")
-	public GameSystemData add(@RequestBody GameSystemData details)
-	{
-		return super.add(details);
-	}
+    @Override
+    @RequestMapping(method = RequestMethod.PUT, value = "/gameSystem")
+    public GameSystemData add(@RequestBody GameSystemData details)
+    {
+        return super.add(details);
+    }
 
-	@Override
-	@RequestMapping(method = RequestMethod.POST, value = "/gameSystem/{id}")
-	public GameSystemData update(@PathVariable("id") Integer primaryKey,
-			@RequestBody GameSystemData details)
-	{
-		return super.update(primaryKey, details);
-	}
+    @Override
+    @RequestMapping(method = RequestMethod.POST, value = "/gameSystem/{id}")
+    public GameSystemData update(@PathVariable("id") Integer primaryKey,
+            @RequestBody GameSystemData details)
+    {
+        return super.update(primaryKey, details);
+    }
 }

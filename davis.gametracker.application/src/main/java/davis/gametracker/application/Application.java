@@ -19,15 +19,15 @@ import org.springframework.context.annotation.Import;
  */
 @SpringBootApplication
 @ComponentScan(excludeFilters = {
-		@Filter(type = FilterType.REGEX, pattern = { ".*/config/ModuleConfiguration" }) })
+        @Filter(type = FilterType.REGEX, pattern = { ".*/config/ModuleConfiguration" }) })
 @Import({ davis.gametracker.controller.config.ModuleConfiguration.class,
-		davis.gametracker.domain.db.config.ModuleConfiguration.class,
-		davis.gametracker.repository.config.ModuleConfiguration.class,
-		davis.gametracker.service.config.ModuleConfiguration.class })
+        davis.gametracker.domain.db.config.ModuleConfiguration.class,
+        davis.gametracker.repository.config.ModuleConfiguration.class,
+        davis.gametracker.service.config.ModuleConfiguration.class })
 public class Application
 {
-	public static void main(String... args) throws Exception
-	{
-		SpringApplication.run(Application.class, args);
-	}
+    public static void main(String... args) throws Exception
+    {
+        SpringApplication.run(Application.class, args);
+    }
 }

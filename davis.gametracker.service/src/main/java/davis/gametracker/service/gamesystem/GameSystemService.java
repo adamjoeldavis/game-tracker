@@ -11,14 +11,14 @@ import davis.gametracker.service.CrudService;
  */
 public interface GameSystemService extends CrudService<Integer, GameSystem, GameSystemData>
 {
-	/**
-	 * Loads a {@link GameSystem} record by its ID
-	 * 
-	 * @param id
-	 *            ID of the system to load
-	 * @return loaded system
-	 * @throws IllegalArgumentException
-	 *             if no record is found
-	 */
-	public GameSystem load(String id) throws IllegalArgumentException;
+    /**
+     * Loads a {@link GameSystem} record by its ID
+     * 
+     * @param id
+     *            ID of the system to load
+     * @return loaded system
+     * @throws IllegalArgumentException
+     *             if no record is found
+     */
+    public GameSystem load(String id) throws IllegalArgumentException;
 }

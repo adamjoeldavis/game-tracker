@@ -15,45 +15,45 @@ import davis.gametracker.domain.db.GameSystem;
  */
 public class GameSystemRepositoryTest extends RepositoryTestBase
 {
-	@Autowired
-	private GameSystemRepository repository;
+    @Autowired
+    private GameSystemRepository repository;
 
-	@Test
-	public void testInjection()
-	{
-		; // will fail if the bean wasn't auto-wired correctly
-	}
+    @Test
+    public void testInjection()
+    {
+        ; // will fail if the bean wasn't auto-wired correctly
+    }
 
-	@Test
-	public void testUniqueNaturalId_PreventsSave()
-	{
-		final String duplicateId = "PS4";
+    @Test
+    public void testUniqueNaturalId_PreventsSave()
+    {
+        final String duplicateId = "PS4";
 
-		repository.saveAndFlush(new GameSystem(duplicateId));
-		try
-		{
-			repository.saveAndFlush(new GameSystem(duplicateId));
-			fail();
-		} catch (Exception exception)
-		{
-			; // expected
-		}
-	}
+        repository.saveAndFlush(new GameSystem(duplicateId));
+        try
+        {
+            repository.saveAndFlush(new GameSystem(duplicateId));
+            fail();
+        } catch (Exception exception)
+        {
+            ; // expected
+        }
+    }
 
-	@Test
-	public void testFindById()
-	{
-		// prepare for the test by inserting some data
-		final String expectedId = "PS4";
-		final String unexpectedId = "PS3";
+    @Test
+    public void testFindById()
+    {
+        // prepare for the test by inserting some data
+        final String expectedId = "PS4";
+        final String unexpectedId = "PS3";
 
-		repository.saveAndFlush(new GameSystem(expectedId));
-		repository.saveAndFlush(new GameSystem(unexpectedId));
+        repository.saveAndFlush(new GameSystem(expectedId));
+        repository.saveAndFlush(new GameSystem(unexpectedId));
 
-		assertEquals(2, repository.count());
+        assertEquals(2, repository.count());
 
-		GameSystem foundSystem = repository.findById(expectedId);
+        GameSystem foundSystem = repository.findById(expectedId);
 
-		assertEquals(expectedId, foundSystem.getId());
-	}
+        assertEquals(expectedId, foundSystem.getId());
+    }
 }

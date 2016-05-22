@@ -16,34 +16,34 @@ import davis.gametracker.service.gamesystem.GameSystemConverter;
 @Service
 public class GameSystemConverterImpl implements GameSystemConverter
 {
-	@Override
-	public void populate(GameSystem record, GameSystemData data)
-	{
-		Objects.requireNonNull(record);
-		Objects.requireNonNull(data);
+    @Override
+    public void populate(GameSystem record, GameSystemData data)
+    {
+        Objects.requireNonNull(record);
+        Objects.requireNonNull(data);
 
-		record.setName(data.getName());
-	}
+        record.setName(data.getName());
+    }
 
-	@Override
-	public GameSystem toRecord(GameSystemData data)
-	{
-		Objects.requireNonNull(data);
+    @Override
+    public GameSystem toRecord(GameSystemData data)
+    {
+        Objects.requireNonNull(data);
 
-		GameSystem newSystem = new GameSystem(data.getId());
+        GameSystem newSystem = new GameSystem(data.getId());
 
-		populate(newSystem, data);
+        populate(newSystem, data);
 
-		return newSystem;
-	}
+        return newSystem;
+    }
 
-	@Override
-	public GameSystemData toView(GameSystem record)
-	{
-		Objects.requireNonNull(record);
+    @Override
+    public GameSystemData toView(GameSystem record)
+    {
+        Objects.requireNonNull(record);
 
-		return new GameSystemData(record.getId())
-				.setName(record.getName());
-	}
+        return new GameSystemData(record.getId())
+                .setName(record.getName());
+    }
 
 }

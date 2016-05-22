@@ -13,12 +13,12 @@ import davis.gametracker.domain.db.GameSystem;
 @Repository
 public interface GameSystemRepository extends JpaRepository<GameSystem, Integer>
 {
-	/**
-	 * Finds a system by its ID
-	 * 
-	 * @param id
-	 *            the id to match on
-	 * @return the matching system
-	 */
-	public GameSystem findById(String id);
+    /**
+     * Finds a system by its ID
+     * 
+     * @param id
+     *            the id to match on
+     * @return the matching system
+     */
+    public GameSystem findById(String id);
 }

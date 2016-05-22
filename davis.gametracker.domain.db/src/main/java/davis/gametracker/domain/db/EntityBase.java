@@ -11,61 +11,67 @@ import javax.persistence.Version;
 
 import org.hibernate.annotations.NaturalId;
 
+/**
+ * Standard base entity of all JPA objects. Contains a surrogate and natural ID,
+ * as well as a row version for data consistency.
+ * 
+ * @author Adam Davis
+ */
 @MappedSuperclass
 public abstract class EntityBase<E extends EntityBase<E, K, ID>, K, ID>
 {
-	public static final String	DEFAULT_SORT_COLUMN	= "id";
+    public static final String DEFAULT_SORT_COLUMN = "id";
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private K					primaryKey;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private K                  primaryKey;
 
-	@Version
-	private long				version;
+    @Version
+    private long               version;
 
-	@NaturalId
-	@Column(insertable = true, updatable = false, nullable = false)
-	private ID					id;
+    @NaturalId
+    @Column(insertable = true, updatable = false, nullable = false)
+    private ID                 id;
 
-	public K getPrimaryKey()
-	{
-		return primaryKey;
-	}
+    public K getPrimaryKey()
+    {
+        return primaryKey;
+    }
 
-	public long getVersion()
-	{
-		return version;
-	}
+    public long getVersion()
+    {
+        return version;
+    }
 
-	public ID getId()
-	{
-		return id;
-	}
+    public ID getId()
+    {
+        return id;
+    }
 
-	protected void setId(ID id)
-	{
-		this.id = id;
-	}
+    protected void setId(ID id)
+    {
+        this.id = id;
+    }
 
-	@Override
-	public boolean equals(Object other)
-	{
-		if (this == other)
-		{
-			return true;
-		}
+    @Override
+    public boolean equals(Object other)
+    {
+        if (this == other)
+        {
+            return true;
+        }
 
-		if (other == null || getClass() != other.getClass())
-		{
-			return false;
-		}
+        if (other == null || getClass() != other.getClass())
+        {
+            return false;
+        }
 
-		return Objects.equals(getId(), ((EntityBase<?, ?, ?>) other).getId());
-	}
+        return Objects.equals(getId(), ((EntityBase<?, ?, ?>) other).getId());
+    }
 
-	@Override
-	public int hashCode()
-	{
-		return getId() == null ? 0 : getId().hashCode();
-	}
+    @Override
+    public int hashCode()
+    {
+        return getId() == null ? 0 : getId().hashCode();
+    }
 }
