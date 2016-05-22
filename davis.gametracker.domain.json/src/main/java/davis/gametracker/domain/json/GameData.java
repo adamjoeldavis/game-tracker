@@ -1,8 +1,8 @@
 package davis.gametracker.domain.json;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,13 +11,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class GameData
 {
 	@JsonProperty
-	private String				name;
+	private String					name;
 
 	@JsonProperty
-	private String				description;
+	private String					description;
 
 	@JsonProperty
-	private Set<GameSystemData>	ownedOn	= new HashSet<>();
+	private List<GameSystemData>	ownedOn	= new ArrayList<>();
 
 	@SuppressWarnings("unused")
 	private GameData()
@@ -35,7 +35,7 @@ public class GameData
 		return name;
 	}
 
-	public Set<GameSystemData> getOwnedOn()
+	public List<GameSystemData> getOwnedOn()
 	{
 		return ownedOn;
 	}
@@ -47,11 +47,11 @@ public class GameData
 		return this;
 	}
 
-	public GameData setOwnedOn(Set<GameSystemData> ownedOn)
+	public GameData setOwnedOn(List<GameSystemData> ownedOn)
 	{
 		if (ownedOn == null)
 		{
-			ownedOn = new HashSet<>();
+			ownedOn = new ArrayList<>();
 		}
 
 		this.ownedOn = ownedOn;

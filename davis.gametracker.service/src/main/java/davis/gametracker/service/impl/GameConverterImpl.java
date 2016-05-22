@@ -21,6 +21,9 @@ public class GameConverterImpl implements GameConverter
 	@Autowired
 	public GameConverterImpl(GameSystemConverter systemConverter, GameSystemService systemService)
 	{
+		assert (systemConverter != null);
+		assert (systemService != null);
+
 		this.systemConverter = systemConverter;
 		this.systemService = systemService;
 	}
@@ -28,6 +31,8 @@ public class GameConverterImpl implements GameConverter
 	@Override
 	public void populate(Game record, GameData data)
 	{
+		assert (data != null);
+
 		for (GameSystemData system : data.getOwnedOn())
 		{
 			record.ownedOn(systemService.load(system.getId()));
@@ -37,6 +42,8 @@ public class GameConverterImpl implements GameConverter
 	@Override
 	public Game initialize(GameData data)
 	{
+		assert (data != null);
+
 		Game newGame = new Game(data.getName());
 
 		populate(newGame, data);
@@ -47,10 +54,15 @@ public class GameConverterImpl implements GameConverter
 	@Override
 	public GameData convert(Game record)
 	{
+		if (record == null)
+		{
+			return null;
+		}
+
 		return new GameData(record.getName())
 				.setOwnedOn(record.getOwnedOn().stream()
 						.map(systemConverter::convert)
-						.collect(Collectors.toSet()));
+						.collect(Collectors.toList()));
 	}
 
 }
